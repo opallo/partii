@@ -1,17 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, ChangeEvent } from "react";
+
+interface Message {
+  id: number;
+  content: string;
+  createdAt: string;
+}
 
 export default function ChatRoom() {
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {
     // Load messages from the server when the component is mounted
     fetch("/api/messages")
       .then((response) => response.json())
-      .then((messages) => setMessages(messages));
+      .then((messages: Message[]) => setMessages(messages));
   }, []);
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setMessage(event.target.value);
   };
 
@@ -26,7 +32,7 @@ export default function ChatRoom() {
         body: JSON.stringify({ content: message }),
       })
         .then((response) => response.json())
-        .then((newMessage) => {
+        .then((newMessage: Message) => {
           // Add the new message to the state
           setMessages((messages) => [...messages, newMessage]);
           setMessage("");
