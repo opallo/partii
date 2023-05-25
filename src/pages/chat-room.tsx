@@ -15,7 +15,7 @@ export default function ChatRoom() {
     const fetchMessages = async () => {
       try {
         const res: Response = await fetch("/api/messages");
-        const data: Message[] = (await await res.json()) as Message[];
+        const data: Message[] = (await res.json()) as Message[];
         setMessages(data);
       } catch (error) {
         console.error(error);
