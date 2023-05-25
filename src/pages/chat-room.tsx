@@ -15,13 +15,13 @@ export default function ChatRoom() {
     const fetchMessages = async () => {
       try {
         const res = await fetch("/api/messages");
-        const data: Message[] = await res.json();
+        const data: Message[] = (await await res.json()) as Message[];
         setMessages(data);
       } catch (error) {
         console.error(error);
       }
     };
-    fetchMessages();
+    void fetchMessages();
   }, []);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +31,7 @@ export default function ChatRoom() {
   const handleSendClick = (event: FormEvent) => {
     event.preventDefault();
     if (message) {
-      fetch("/api/messages", {
+      void fetch("/api/messages", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

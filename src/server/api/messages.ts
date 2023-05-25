@@ -15,18 +15,18 @@ export default async function handler(
 ) {
   if (req.method === "POST") {
     const { content }: { content: string } = req.body;
-    const newMessage: Message = await prisma.message.create({
+    const newMessage: Message = (await prisma.message.create({
       data: {
         content,
       },
-    });
+    })) as Message;
     res.json(newMessage);
   } else if (req.method === "GET") {
-    const messages: Message[] = await prisma.message.findMany({
+    const messages: Message[] = (await prisma.message.findMany({
       orderBy: {
         createdAt: "asc",
       },
-    });
+    })) as Message[];
     res.json(messages);
   } else {
     res.status(405).end(); // Method Not Allowed
