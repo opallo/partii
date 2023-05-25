@@ -16,3 +16,9 @@ model Post {
 
   @@index([authorId])
 }
+
+model message {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+}
