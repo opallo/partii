@@ -28,23 +28,22 @@ export default function ChatRoom() {
     setMessage(event.target.value);
   };
 
-  const handleSendClick = async (event: FormEvent) => {
+  const handleSendClick = (event: FormEvent) => {
     event.preventDefault();
     if (message) {
-      try {
-        const response = await fetch("/api/messages", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ content: message }),
-        });
-        const newMessage: Message = await response.json();
-        setMessages((messages) => [...messages, newMessage]);
-        setMessage("");
-      } catch (error) {
-        console.error(error);
-      }
+      fetch("/api/messages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ content: message }),
+      })
+        .then((response) => response.json())
+        .then((newMessage: Message) => {
+          setMessages((messages) => [...messages, newMessage]);
+          setMessage("");
+        })
+        .catch((error) => console.error(error));
     }
   };
 
