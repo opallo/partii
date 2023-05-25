@@ -14,7 +14,7 @@ export default function ChatRoom() {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const res = await fetch("/api/messages");
+        const res: Response = await fetch("/api/messages");
         const data: Message[] = (await await res.json()) as Message[];
         setMessages(data);
       } catch (error) {
